@@ -4,10 +4,10 @@ import requests
 import json
 import pandas as pd
 
-api_url = "http://s2jira2dev/rest/api/2/search"
+api_url = "<jira URL>"
 headers =  {"Content-Type":"application/json", "Authorization":"Basic <credentials here>"}
-payload = {
-    "jql": "project = ATL and resolution is NOT EMPTY and created >='2022/01/01' and resolved <= '2022/12/31'",
+payload = { #payload to pull expected results from Jira.  Should only pull the completed items from last year
+    "jql": "project = teamPROJ and resolution is NOT EMPTY and created >='2022/01/01' and resolved <= '2022/12/31'",
     "startAt": 0,
     "maxResults": -1,
     "fields": [
@@ -16,13 +16,13 @@ payload = {
         "assignee"
     ]
 }
-response = requests.post(api_url, headers=headers, json = payload)
+response = requests.post(api_url, headers=headers, json = payload) #post function to execute API call
 responseBody = response.json()
-jsonBody = json.loads(response.content.decode("utf-8"))
+jsonBody = json.loads(response.content.decode("utf-8")) #saves the response into a JSON format that can be easily parsed
 
 keys = []
 status = []
-for x in range(len(jsonBody["issues"])):
+for x in range(len(jsonBody["issues"])): #loops through the number of issues pulled
    keys.append(jsonBody["issues"][x]["key"])
    status.append(jsonBody["issues"][x]["fields"]["status"]["name"])
 
