@@ -33,12 +33,12 @@ def changeTypeVal = issue.getCustomFieldValue(changeType).toString()
 def peerRevVal = issue.getCustomFieldValue(peerRev) as List
 ApplicationUser peerRevUser
  
-final externalUrl = "<SOI URL>"
+final externalUrl = "<application URL>"
  
 // If the API accepts different types then you can change this and format the data accordingly
 def body = "{NTID:\"${issue.reporter.name}\"}"
  
-def postResponse = post(externalUrl, "/SOI/AtlassianAPI/GetDirectorForNTID", body) //Defines the URL to POST to
+def postResponse = post(externalUrl, "applicationEndpoint", body) //Defines the URL to POST to
 def SUPapprover
 // If GET response is successful then the response can be cast to a Map which will allow to interact with the data
 if (postResponse) {
