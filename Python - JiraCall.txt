@@ -1,0 +1,34 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import requests
+import json
+import pandas as pd
+
+api_url = "http://s2jira2dev/rest/api/2/search"
+headers =  {"Content-Type":"application/json", "Authorization":"Basic <credentials here>"}
+payload = {
+    "jql": "project = ATL and resolution is NOT EMPTY and created >='2022/01/01' and resolved <= '2022/12/31'",
+    "startAt": 0,
+    "maxResults": -1,
+    "fields": [
+        "summary",
+        "status",
+        "assignee"
+    ]
+}
+response = requests.post(api_url, headers=headers, json = payload)
+responseBody = response.json()
+jsonBody = json.loads(response.content.decode("utf-8"))
+
+keys = []
+status = []
+for x in range(len(jsonBody["issues"])):
+   keys.append(jsonBody["issues"][x]["key"])
+   status.append(jsonBody["issues"][x]["fields"]["status"]["name"])
+
+total = dict(zip(keys, status))
+totalArray = np.array(total)
+
+plt.hist(status)
+plt.show()
+plt.clf()
