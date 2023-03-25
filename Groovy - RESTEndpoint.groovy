@@ -19,17 +19,12 @@ import com.atlassian.confluence.internal.security.SpacePermissionContext
  
 @BaseScript CustomEndpointDelegate delegate
  
-//Change <Your Admin Group> to the name of you group you use for system administrators.
-//This will only allow users in the admin group to execute the REST call.
- 
-//, groups: ["confluence-administrators"] include this after GET to restrict to certain groups
+//REST Endpoint definition with GET method
 updatePermissions(httpMethod: "GET"){ MultivaluedMap queryParams ->
  
   def spaceManager = ComponentLocator.getComponent(SpaceManager) //define space Manager to get space objects
   def spacePermissionManager = ComponentLocator.getComponent(SpacePermissionManager) //define space permission manager to alter permissions on a space
-  def spacePSI = ComponentLocator.getComponent(SpacePermissionSaverInternal)
   def userManager = ComponentLocator.getComponent(UserManager)
-  def dSpacePM = ComponentLocator.getComponent(DefaultSpacePermissionManager)
   def space = spaceManager.getSpace(queryParams.getFirst("spaceKey") as String)  //pulls the first instance of spaceKey in the parameters passed by the post-function
   def user = userManager.getUser(queryParams.getFirst("user") as String) as ConfluenceUser //pulls the first instance of user in the parameters passed by the post-function
   SpacePermissionContext context = SpacePermissionContext.createDefault()
