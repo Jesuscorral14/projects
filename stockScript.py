@@ -6,7 +6,7 @@ import requests
 from datetime import date, timedelta
 import json
 
-client = RESTClient(api_key="JEpHb0TFeCS5Wq_hONi9s4OIngshVlDm")
+client = RESTClient(api_key="")
 
 tickers = ["AAPL"] #Going to be used for multiple calls.  Rate limited right now so other queries stop working when I use a list
 ticker = "AAPL"
@@ -20,7 +20,7 @@ for bar in bars:
     print(bar)
         
 
-headers = {"Authorization" : "Bearer JEpHb0TFeCS5Wq_hONi9s4OIngshVlDm"}
+headers = {"Authorization" : "Bearer <API KEY HERE>"}
 
 
 
