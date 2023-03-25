@@ -53,7 +53,7 @@ if (postResponse) {
  
 peerRevUser = peerRevVal ? userManager.getUserByName(peerRevVal.first().name.toString()) : null //if peerRevVal exists, get User selected as applicationUser, otherwise null
 ApplicationUser SUPapproverUser = SUPapprover ? userManager.getUserByName(SUPapprover.toString()) : null //Defines variable for supervisor approver retrieved from API Call
-// Get table list
+// Integration with lookup manager table
 def table = "PLASMA Approvers CPM" //define table we're pulling
 int tableId = lookupService.getTableIdByName(table) // Get table id by name
 Set appr = [] //define appr set
