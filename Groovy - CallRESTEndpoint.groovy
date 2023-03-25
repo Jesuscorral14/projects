@@ -49,14 +49,11 @@ def groupManager = ComponentAccessor.getGroupManager()
     connection.setRequestProperty("Authorization", basicAuth)       
     connection.connect()                
     //Log an error in if the return code is not 200.       
-    if(connection.getResponseCode().equals(200) && commentFlag == 0) //transition issue to error status if response code is not 200         
+    if(connection.getResponseCode().equals(200) && commentFlag == 0) //Create comment for manual error handling and team notification      
     {   
         commentFlag = 1
         final boolean dispatchEvent = true
         final String commentBody = """Permissions for the space were updated appropriately!  All users specified should have admin privileges."""
- 
-        // the author of the comment will be the logged in user
-        def author = ComponentAccessor.jiraAuthenticationContext.loggedInUser
  
         ComponentAccessor.commentManager.create(issue, robotUser, commentBody, dispatchEvent)
     }
@@ -65,9 +62,6 @@ def groupManager = ComponentAccessor.getGroupManager()
         commentFlag = 1
         final boolean dispatchEvent = true
         final String commentBody = """There was an issue updating the permissions.  Please verify the space was created and check the error logs for details"""
- 
-        // the author of the comment will be the logged in user
-        def author = ComponentAccessor.jiraAuthenticationContext.loggedInUser
  
         ComponentAccessor.commentManager.create(issue, robotUser, commentBody, dispatchEvent)
       }
